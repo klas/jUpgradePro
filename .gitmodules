@@ -1,0 +1,3 @@
+[submodule "matware-libraries"]
+	path = matware-libraries
+	url = git@github.com:klas/matware-libraries.git
