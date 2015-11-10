@@ -27,7 +27,7 @@
 	</media>
 
 	<administration>
-		<menu img="images/com_jupgradepro/images/jupgradepro.png">COM_JUPGRADEPRO</menu>
+		<menu img="media/com_jupgradepro/images/jupgradepro.png">COM_JUPGRADEPRO</menu>
 
 		<files folder="admin">
 			<folder>controllers</folder>
