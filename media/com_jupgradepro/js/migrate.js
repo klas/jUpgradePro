@@ -11,16 +11,16 @@
  */
 var jUpgradepro = new Class({
 
-  Implements: [Options, Events],
+	Implements: [Options, Events],
 
-  options: {
-    method: 'rest',
-    positions: 0,
-    skip_checks: 0,
-    debug_check: 0,
-    debug_step: 0,
-    debug_migrate: 0
-  },
+	options: {
+		method: 'rest',
+		positions: 0,
+		skip_checks: 0,
+		debug_check: 0,
+		debug_step: 0,
+		debug_migrate: 0
+	},
 
 	initialize: function(options) {
 		var self = this;
@@ -37,7 +37,7 @@ var jUpgradepro = new Class({
 		$('done').setStyle('display', 'none');
 
 		$('update').addEvent('click', function(e) {
-				self.checks(e);
+			self.checks(e);
 		});
 
 	},
@@ -183,7 +183,7 @@ var jUpgradepro = new Class({
 
 		setTimeout(function() {
 			mySlideWarning.slideOut();
-		}, 10000); 
+		}, 10000);
 
 		// Configure the radial progress bar
 		$('pb4').pb4 = new RadialProgressBar($('pb4'), {
@@ -262,6 +262,7 @@ var jUpgradepro = new Class({
 					$('pb4').set('data-progress', '100');
 					this.cancel();
 					self.extensions(e);
+					return;
 				}
 
 				// Redirect if total == 0
@@ -298,7 +299,7 @@ var jUpgradepro = new Class({
 				totalItems.innerHTML = object.total;
 
 				// Start the checks
-				row.options.url = 'index.php?option=com_jupgradepro&format=raw&task=ajax.migrate&table='+object.name;	
+				row.options.url = 'index.php?option=com_jupgradepro&format=raw&task=ajax.migrate&table='+object.name;
 
 				// Running the request[s]
 				if (object.total != 0) {
@@ -387,7 +388,7 @@ var jUpgradepro = new Class({
 			link: 'chain',
 			url: 'index.php?option=com_jupgradepro&format=raw&task=ajax.step&extensions=tables',
 			method: 'get'
-		}); // end Request		
+		}); // end Request
 
 
 		ext_step.addEvents({
@@ -395,11 +396,12 @@ var jUpgradepro = new Class({
 
 				var object = JSON.decode(response);
 
-				if (object === null)
+				if (typeof(object) === 'undefined' || object == null)
 				{
 					$('pb7').set('data-progress', '100');
 					this.cancel();
 					self.done();
+					return;
 				}
 
 				// Redirect if total == 0
@@ -431,7 +433,7 @@ var jUpgradepro = new Class({
 				ext_totalItems.innerHTML = object.total;
 
 				// Start the checks
-				ext_row.options.url = 'index.php?option=com_jupgradepro&format=raw&task=ajax.migrate&extensions=tables&table='+object.name;	
+				ext_row.options.url = 'index.php?option=com_jupgradepro&format=raw&task=ajax.migrate&extensions=tables&table='+object.name;
 
 				// Running the request[s]
 				if (object.total != 0) {
@@ -461,7 +463,7 @@ var jUpgradepro = new Class({
 				}else if (response == 0){
 					$('pb7').set('data-progress', '100%');
 					this.cancel();
-					self.done();					
+					self.done();
 				}
 			}
 		});
@@ -539,7 +541,7 @@ var jUpgradepro = new Class({
 			link: 'chain',
 			method: 'get'
 		}); // end Request
-	
+
 		//
 		// 
 		//
@@ -566,7 +568,7 @@ var jUpgradepro = new Class({
 						//console.log(response);
 						counter = counter + 1;
 						currItem.innerHTML = counter;
-						status.innerHTML = 'Getting ' + basename(object.images[counter]);						
+						status.innerHTML = 'Getting ' + basename(object.images[counter]);
 
 						percent = (counter / object.total) * 100;
 
@@ -575,18 +577,18 @@ var jUpgradepro = new Class({
 						if (counter == object.total) {
 							self.done();
 						}
-						
+
 					}
 				});
-				
+
 				// Start the checks
-				file.options.url = 'index.php?option=com_jupgradepro&format=raw&view='+method+'&task=image&files=images';			
-				
+				file.options.url = 'index.php?option=com_jupgradepro&format=raw&view='+method+'&task=image&files=images';
+
 				for (i=1;i<=object.total;i++) {
-					rm.addRequest(i, file);			
+					rm.addRequest(i, file);
 				}
-		
-				rm.runAll();			
+
+				rm.runAll();
 			}
 		});
 
